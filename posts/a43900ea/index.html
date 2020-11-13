@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>递归实现后序遍历二叉树 | 皆有居</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="二叉树,遍历,递归">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	var _hmt = _hmt || [];
+	(function() {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?d6a842b92e0cf851eb4cacf0f32c85d5";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
+	})();
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?d6a842b92e0cf851eb4cacf0f32c85d5"></script>
+
+
+    
+    <meta name="description" content="问题描述从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。 解题思路   递归实现">
+<meta name="keywords" content="二叉树,遍历,递归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归实现后序遍历二叉树">
+<meta property="og:url" content="https://niithub.cn/blog/posts/a43900ea/index.html">
+<meta property="og:site_name" content="皆有居">
+<meta property="og:description" content="问题描述从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。 解题思路   递归实现">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://oscimg.oschina.net/oscnet/47b1c52ca3bc8e1d02e0b5a12e29d4e3de6.jpg">
+<meta property="og:updated_time" content="2020-11-13T07:51:22.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="递归实现后序遍历二叉树">
+<meta name="twitter:description" content="问题描述从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。 解题思路   递归实现">
+<meta name="twitter:image" content="https://oscimg.oschina.net/oscnet/47b1c52ca3bc8e1d02e0b5a12e29d4e3de6.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="皆有居" href="/blog/blog/atom.xml">
+    
+    <link rel="shortcut icon" href="/blog/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/blog/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      <div class="brand">
+        <a href="/blog/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/blog/img/avatar.png" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">niithub</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/blog/">
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/blog/archives">
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/blog/categories">
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/blog/tags">
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/blog/about">
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/blog/sites">
+                    <i class="icon icon-lg icon-linkedin-square"></i>
+                    <span>外链</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:niithub@yandex.com" target="_parent" title="Email">
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/niithub" target="_blank" title="Github">
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">递归实现后序遍历二叉树</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解题思路"><span class="post-toc-number">2.</span> <span class="post-toc-text">解题思路   </span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#程序实现"><span class="post-toc-number">3.</span> <span class="post-toc-text">程序实现</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#运行结果"><span class="post-toc-number">4.</span> <span class="post-toc-text">运行结果</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-递归实现后序遍历二叉树" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">递归实现后序遍历二叉树</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-05-15 18:58:00" datetime="2019-05-15T10:58:00.000Z" itemprop="datePublished">2019-05-15</time>
+
+            <br id="mybreak">
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/blog/categories/数据结构/">数据结构</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a><strong>问题描述</strong></h1><pre><code>从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。
+</code></pre><h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路   "></a><strong>解题思路   </strong></h1><p>递归实现<br><a id="more"></a></p>
+<h1 id="程序实现"><a href="#程序实现" class="headerlink" title="程序实现"></a><strong>程序实现</strong></h1><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string"><stdio.h></stdio.h></span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string"><stdlib.h></stdlib.h></span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> Datatype;</span><br><span class="line"><span class="comment">/*二叉树*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Node</span> {</span></span><br><span class="line">	Datatype data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">LChild</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span> *<span class="title">RChild</span>;</span></span><br><span class="line">} BiTNode, *BiTree;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createBiTree</span><span class="params">(BiTree *tree)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">traverseTree</span><span class="params">(BiTree tree)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>{</span><br><span class="line">	BiTree tree;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"按先序遍历序列建立二叉树:\n"</span>);</span><br><span class="line">	createBiTree(&tree);</span><br><span class="line">	traverseTree(tree);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createBiTree</span><span class="params">(BiTree *tree)</span> </span>{</span><br><span class="line">	<span class="keyword">char</span> ch;</span><br><span class="line">	ch = getchar();</span><br><span class="line">	<span class="keyword">if</span>(ch == <span class="string">' '</span>) {</span><br><span class="line">		*tree = <span class="literal">NULL</span>;</span><br><span class="line">	} <span class="keyword">else</span> {</span><br><span class="line">		<span class="comment">//生成一个新结点</span></span><br><span class="line">		*tree = (BiTree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode));</span><br><span class="line">		(*tree)->data = ch;</span><br><span class="line">		<span class="comment">//生成左子树</span></span><br><span class="line">		createBiTree(&((*tree)->LChild));</span><br><span class="line">		<span class="comment">//生成右子树</span></span><br><span class="line">		createBiTree(&((*tree)->RChild));</span><br><span class="line">	}</span><br><span class="line">}</span><br><span class="line"><span class="comment">/**遍历树的结点*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">traverseTree</span><span class="params">(BiTree tree)</span> </span>{</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">if</span>(tree == <span class="literal">NULL</span>) {</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	}</span><br><span class="line">	traverseTree(tree->LChild);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%c"</span>, tree->data);</span><br><span class="line">	traverseTree(tree->RChild);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a><strong>运行结果</strong></h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://oscimg.oschina.net/oscnet/47b1c52ca3bc8e1d02e0b5a12e29d4e3de6.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2020-11-13T07:51:22.638Z" itemprop="dateUpdated">2020-11-13 15:51:22</time>
+</span>
+
+
+        
+        原文链接：<a href="/blog/posts/a43900ea/" target="_blank" rel="external">https://niithub.cn/blog/posts/a43900ea/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='https://niithub.cn/blog'">
+            <img src="/blog/img/avatar.png" alt="niithub">
+            <a>niithub</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/二叉树/">二叉树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/递归/">递归</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/遍历/">遍历</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://niithub.cn/blog/posts/a43900ea/&title=《递归实现后序遍历二叉树》 — 皆有居&pic=https://niithub.cn/blog/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://niithub.cn/blog/posts/a43900ea/&title=《递归实现后序遍历二叉树》 — 皆有居&source=问题描述从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。
+解题..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://niithub.cn/blog/posts/a43900ea/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《递归实现后序遍历二叉树》 — 皆有居&url=https://niithub.cn/blog/posts/a43900ea/&via=https://niithub.cn/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://niithub.cn/blog/posts/a43900ea/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/blog/posts/f2a970c3/" id="post-prev" class="post-nav-link">
+        <h4 class="title">
+          上一篇：递归实现先序遍历二叉树
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/blog/posts/5bf8c406/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：使用邻接矩阵存储无向图">下一篇：使用邻接矩阵存储无向图</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'niithub@yandex.com' == 'true',
+            verify: 'true' == 'true',
+            appId: "zYpx7SGiQc5asEy9AH4tD2kN-gzGzoHsz",
+            appKey: "HB2QM5LmBRKfRyUVHifM2w2O",
+            avatar: "mm",
+            placeholder: "欢迎留言讨论",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2017
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="https://niithub.cn/blog">niithub.cn</a>
+            <br>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+
+        <br>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style="display:none">
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style="display:none">
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br>
+
+        <span class="license">This blog is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.en">Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License</a>.</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/blog/img/avatar.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/blog/img/wechat.png" data-alipay="/blog/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://niithub.cn/blog/posts/a43900ea/&title=《递归实现后序遍历二叉树》 — 皆有居&pic=https://niithub.cn/blog/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://niithub.cn/blog/posts/a43900ea/&title=《递归实现后序遍历二叉树》 — 皆有居&source=问题描述从键盘接受输入先序序列，以二叉链表作为存储结构，建立二叉树（以先序来建立）并对其进行中序遍历，然后将遍历结果打印输出。要求采用递归方法实现。
+解题..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://niithub.cn/blog/posts/a43900ea/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《递归实现后序遍历二叉树》 — 皆有居&url=https://niithub.cn/blog/posts/a43900ea/&via=https://niithub.cn/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://niithub.cn/blog/posts/a43900ea/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://niithub.cn/blog/posts/a43900ea/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/blog/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/blog/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/blog/js/main.min.js?v=3.0"></script>
+
+<!-- 动画&配置 -->
+<script src="/blog/js/script.min.js?v=3.0"></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/05/13");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "niithub");
+
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>
