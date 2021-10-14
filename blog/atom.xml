@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://niithub.cn/"/>
-  <updated>2021-10-13T16:21:04.011Z</updated>
+  <updated>2021-10-14T15:41:12.527Z</updated>
   <id>https://niithub.cn/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo使用说明</title>
+    <link href="https://niithub.cn//posts/82ca5a28/"/>
+    <id>https://niithub.cn//posts/82ca5a28/</id>
+    <published>2021-10-14T14:56:32.000Z</published>
+    <updated>2021-10-14T15:41:12.527Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>安装hexo</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo</span><br></pre></td></tr></tbody></table></figure></li><li><p>安装发布hexo必须的git插件</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></tbody></table></figure></li><li><p>修改_config.yml</p><figure class="highlight stylus"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github<span class="selector-class">.com</span>:YOUR_ID/YOUR_ID<span class="selector-class">.github</span><span class="selector-class">.io</span>.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></tbody></table></figure></li><li><p>新建文章</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></tbody></table></figure></li><li><p>清理hexo编译结果</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo clean</span><br></pre></td></tr></tbody></table></figure></li><li><p>hexo编译</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo g</span><br></pre></td></tr></tbody></table></figure></li><li><p>hexo发布</p><figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hexo d</span><br></pre></td></tr></tbody></table></figure></li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;安装hexo&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;t
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://niithub.cn/categories/Linux/"/>
+    
+      <category term="命令记录" scheme="https://niithub.cn/categories/Linux/%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/"/>
+    
+    
+      <category term="Linux" scheme="https://niithub.cn/tags/Linux/"/>
+    
+      <category term="安装记录" scheme="https://niithub.cn/tags/%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/"/>
+    
+  </entry>
   
   <entry>
     <title>文章收藏</title>
