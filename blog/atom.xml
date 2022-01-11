@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://niithub.cn/"/>
-  <updated>2021-12-24T10:09:17.323Z</updated>
+  <updated>2022-01-11T08:26:44.363Z</updated>
   <id>https://niithub.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM内存</title>
+    <link href="https://niithub.cn//posts/f3dc315c/"/>
+    <id>https://niithub.cn//posts/f3dc315c/</id>
+    <published>2021-12-24T10:13:39.000Z</published>
+    <updated>2022-01-11T08:26:44.363Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文讨论的内存空间基于Jdk8<br><img src="https://raw.githubusercontents.com/niithub/pic/master/blog/image.2oe5fp5306w.png" alt="内存空间"></p></blockquote><h1 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h1><p><code>线程私有</code>（为了线程切换后能恢复到正确的执行位置），也称为代码的行号指示器，字节码解释器就是通过改变程序计数器的位置来确定下一行要执行的代码，是唯一一个不会出现 OutOfMemoryError 的内存区域，它的生命周期随着线程的创建而创建，随着线程的结束而死亡。<br>如果线程正在执行一个Java方法，那么它记录的是正在执行虚拟机字节码指令的地址，如果是一个native方法那么它的值为空。<br>在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。</p><h1 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h1><p>线程<code>私有的</code>，它的声明周期和线程一致。每个线程创建时都会创建一个虚拟机栈，内部保存了一个个的栈帧，每个栈帧就对应着一次方法的调用。既然知道了虚拟机栈里面存放的是一个个的栈帧，那么也不难猜出虚拟机栈里面都存储了什么东西。<br>Java虚拟机栈是存在OOM的，当线程所请求的栈的深度大于虚拟机栈的深度或者虚拟机栈可以动态扩容，当栈扩展时无法申请到足够的内存时，就会抛出OOM。<br><img src="https://raw.githubusercontents.com/niithub/pic/master/blog/image.hjcni6jh4bl.png" alt="image"></p><h2 id="虚拟机栈内部结构"><a href="#虚拟机栈内部结构" class="headerlink" title="虚拟机栈内部结构"></a>虚拟机栈内部结构</h2><p><img src="https://raw.githubusercontents.com/niithub/pic/master/blog/image.iuhg08ka3a.png" alt="image"></p><h2 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h2><p>主要存储方法的参数，所有的基本类型数据和对象地址，以及返回地址类型（return address）。<br>它以变量槽为最小的存储单位，Java虚拟机并没有规定一个变量槽占用多少内存空间，但是规定了一个变量槽可以存放一个32位以内的数据类型。如果存储的数据类型超过32位，比如long、double，那么就使用两个变量槽进行存储。</p><h2 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h2><p>操作数栈是一个先进后出的操作数栈，当一个方法刚开始执行的时候，一个新的栈帧也会随之被创建出来，这个方法的操作数栈是空的，它主要用于保存计算过程的中间结果，同时作为计算过程中变量临时的存储空间。<br>如果被调用的方法有返回值，那么返回值将会被压入当前栈帧的操作数栈中。操作数栈并非采用索引的方式进行数据访问，而是通过入栈（push）和出栈（pop）操作来完成数据的访问。</p><h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>栈帧中保存了一个方法的引用，当执行方法的时候，可以拿着这个引用到运行时常量池中找到这个方法。<br>动态链接的作用就是将这些方法的符号引用转换为调用方法的直接引用。</p><h2 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h2><p>在方法执行结束之后，要返回下一条要执行代码位置的值，也就是程序计数器的值。<br>异常导致的方法退出，不会返回任何值的。对于抛出的异常，栈帧中不会做任何记录，但是会记录在一个异常表中。</p><h1 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h1><p>虚拟机栈为虚拟机执行 Java 方法（也就是字节码）服务，而本地方法栈<code>线程私有</code>，为虚拟机使用到的 Native 方法服务。 在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。</p><h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><p>Java堆是虚拟机中最大的一块内存空间，它被所有的<code>线程共享</code>，在虚拟机启动时创建。它唯一的目的就是存放对象实例。<br>随着即时编译技术的发展进步，尤其是逃逸分析技术的日渐强大，栈上分配、变量替换等优化手段，让实例在”只在堆“中分配<code>不再成为绝对</code>。<br>Java堆是垃圾收集的主要区域，Java堆中也经常出现新生代、老年代、永久代等等，这里需要注意，这些并不是Java堆物理上的内存布局，它是作为垃圾收集器而划分一种内存布局。</p><h1 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h1><p><code>线程共享</code>的区域，主要用于存储被虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据。<br>方法区它是<code>可以</code>被垃圾收集器进行<code>回收</code>的，主要针对<code>类型的卸载</code>和<code>常量池</code>的回收。<br>方法区也可以产生OOM，当方法区无法满足新的内存分配需求时，将抛出OutOfMemoryError异常。</p><h1 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h1><p>运行时常量池是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等信息外，还有一项信息是常量池表，它用来存储编译期生成的各种字面量和符号引用。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;本文讨论的内存空间基于Jdk8&lt;br&gt;&lt;img src=&quot;https://raw.githubusercontents.com/niithub/pic/master/blog/image.2oe5fp5306w.png&quot; alt=&quot;内存空间&quot;&gt;&lt;/
+      
+    
+    </summary>
+    
+      <category term="Java" scheme="https://niithub.cn/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="https://niithub.cn/tags/Java/"/>
+    
+      <category term="Jvm" scheme="https://niithub.cn/tags/Jvm/"/>
+    
+  </entry>
   
   <entry>
     <title>IO实践</title>
