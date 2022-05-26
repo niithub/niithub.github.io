@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/niithub/pic//blog/20201002215409.webp">
 <meta property="article:published_time" content="2020-11-02T06:46:31.000Z">
-<meta property="article:modified_time" content="2021-12-07T09:36:12.594Z">
+<meta property="article:modified_time" content="2022-05-26T06:36:11.888Z">
 <meta property="article:author" content="niithub">
 <meta property="article:tag" content="Stream">
 <meta name="twitter:card" content="summary">
@@ -93,7 +93,7 @@ var saveToLocal = {
   isHome: false,
   isHighlightShrink: undefined,
   isToc: true,
-  postUpdate: '2021-12-07 17:36:12'
+  postUpdate: '2022-05-26 14:36:11'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -187,7 +187,7 @@ if (asideStatus !== undefined) {
 <li>获取一个数据源（source）</li>
 <li>数据转换</li>
 <li><p>执行操作获取想要的结果，每次转换原有 Stream 对象不改变，返回一个新的 Stream 对象（可以有多次转换），这就允许对其操作可以像链条一样排列，变成一个管道，如下图所示。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/991852719.png" alt=""></p>
+<p><img src="https://niithub.cn/pic/991852719.png" alt=""></p>
 </li>
 </ul>
 <h1 id="生成流的方式"><a href="#生成流的方式" class="headerlink" title="生成流的方式"></a>生成流的方式</h1><h2 id="Collection和数组"><a href="#Collection和数组" class="headerlink" title="Collection和数组"></a>Collection和数组</h2><ul>
@@ -228,8 +228,8 @@ if (asideStatus !== undefined) {
 </li>
 </ul>
 <h1 id="流的使用详解"><a href="#流的使用详解" class="headerlink" title="流的使用详解"></a>流的使用详解</h1><h2 id="Collect结果"><a href="#Collect结果" class="headerlink" title="Collect结果"></a>Collect结果</h2><ul>
-<li>map(一对一)：作用是把 input Stream 的每一个元素，映射成 output Stream 的另外一个元素<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/1605104679.jpg" alt=""></li>
-<li><p>flatMap(一对多)：flatMap 把 input Stream 中的层级结构扁平化，就是将最底层元素抽出来放到一起，最终 output 的新 Stream 里面已经没有 List 了，都是直接的数据。<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/1605104715.jpg" alt=""></p>
+<li>map(一对一)：作用是把 input Stream 的每一个元素，映射成 output Stream 的另外一个元素<br><img src="https://niithub.cn/pic/1605104679.jpg" alt=""></li>
+<li><p>flatMap(一对多)：flatMap 把 input Stream 中的层级结构扁平化，就是将最底层元素抽出来放到一起，最终 output 的新 Stream 里面已经没有 List 了，都是直接的数据。<br><img src="https://niithub.cn/pic/1605104715.jpg" alt=""></p>
 </li>
 <li><p>filter：filter 对原始 Stream 进行某项过滤，通过过滤的元素被留下来生成一个新 Stream。</p>
 <figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer[] sixNums = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>};</span><br><span class="line">Integer[] evens =</span><br><span class="line">        Stream.of(sixNums).filter(n -&gt; n%<span class="number">2</span> == <span class="number">0</span>).toArray(Integer[]::<span class="keyword">new</span>);</span><br></pre></td></tr></tbody></table></figure></li>
@@ -248,7 +248,7 @@ if (asideStatus !== undefined) {
 <li><p>noneMatch：Stream 中没有一个元素符合传入的 predicate，返回 true</p>
 </li>
 </ul>
-<h2 id="收集器"><a href="#收集器" class="headerlink" title="收集器"></a>收集器</h2><p><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/2196872658-3ef8902eeaf9c742.5vf1g4cq0nv.png" alt="image"></p>
+<h2 id="收集器"><a href="#收集器" class="headerlink" title="收集器"></a>收集器</h2><p><img src="https://niithub.cn/pic/2196872658-3ef8902eeaf9c742.5vf1g4cq0nv.png" alt="image"></p>
 <h3 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h3><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).stream().collect(Collectors.toList());</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="Grouping-和-Partitioning"><a href="#Grouping-和-Partitioning" class="headerlink" title="Grouping 和 Partitioning"></a>Grouping 和 Partitioning</h3><h4 id="groupingBy"><a href="#groupingBy" class="headerlink" title="groupingBy"></a>groupingBy</h4><ul>
 <li><p>根据某一个字段或条件进行分组，返回一个 Map，其中 key 为分组的字段或条件，value 默认为 list，groupingByConcurrent() 是其并发版本</p>

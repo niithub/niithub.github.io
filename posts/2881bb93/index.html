@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/niithub/pic//blog/20201002215409.webp">
 <meta property="article:published_time" content="2020-11-11T14:40:15.000Z">
-<meta property="article:modified_time" content="2021-10-13T16:21:04.010Z">
+<meta property="article:modified_time" content="2022-05-26T06:36:11.888Z">
 <meta property="article:author" content="niithub">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="函数">
@@ -94,7 +94,7 @@ var saveToLocal = {
   isHome: false,
   isHighlightShrink: undefined,
   isToc: true,
-  postUpdate: '2021-10-14 00:21:04'
+  postUpdate: '2022-05-26 14:36:11'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -165,32 +165,32 @@ if (asideStatus !== undefined) {
 <li>不使用函数</li>
 </ul>
 <figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> service_name <span class="keyword">from</span> service;</span><br></pre></td></tr></tbody></table></figure>
-<p>结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.0l0v49vj58cq.png" alt=""></p>
+<p>结果如下图所示：<br><img src="https://niithub.cn/pic/image.0l0v49vj58cq.png" alt=""></p>
 <ul>
 <li>使用函数后</li>
 </ul>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">group_concat</span>(<span class="keyword">distinct</span> service_name) <span class="keyword">from</span> service;</span><br></pre></td></tr></tbody></table></figure>
-<p>结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.f1vor63z4jw.png" alt=""></p>
+<p>结果如下图所示：<br><img src="https://niithub.cn/pic/image.f1vor63z4jw.png" alt=""></p>
 <h2 id="DATEDIFF"><a href="#DATEDIFF" class="headerlink" title="DATEDIFF()"></a>DATEDIFF()</h2><p>语法：<code>DATEDIFF(date1,date2)</code><br>作用：计算两个日期的间隔，且只有值的日期部分参与计算</p>
-<p> 结果如下图所示：<br> <img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.xg9799nf6b.png" alt="示例1"><br> <img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.9b2w9vmvyoa.png" alt="示例2"></p>
+<p> 结果如下图所示：<br> <img src="https://niithub.cn/pic/image.xg9799nf6b.png" alt="示例1"><br> <img src="https://niithub.cn/pic/image.9b2w9vmvyoa.png" alt="示例2"></p>
 <h2 id="IFNULL"><a href="#IFNULL" class="headerlink" title="IFNULL()"></a>IFNULL()</h2><p>语法：<code>IFNULL(expression, alt_value)</code><br>作用：如果第一个参数的表达式 expression 为 NULL，则返回第二个参数的备用值。</p>
 <p>eg:</p>
 <ul>
 <li>使用函数前</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select card_id_a from table limit 1;</span><br></pre></td></tr></tbody></table></figure>
-<p> 结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.qml0m8sm55b.png" alt="image"></p>
+<p> 结果如下图所示：<br><img src="https://niithub.cn/pic/image.qml0m8sm55b.png" alt="image"></p>
 <ul>
 <li>使用函数后</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select IFNULL(card_id_a, '空') from table limit 1;</span><br></pre></td></tr></tbody></table></figure>
-<p> 结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.fz7f7alef0f.png" alt=""></p>
+<p> 结果如下图所示：<br><img src="https://niithub.cn/pic/image.fz7f7alef0f.png" alt=""></p>
 <h2 id="CURDATE"><a href="#CURDATE" class="headerlink" title="CURDATE()"></a>CURDATE()</h2><p>作用：返回当前的日期</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT NOW(),CURDATE(),CURTIME();</span><br></pre></td></tr></tbody></table></figure>
-<p> 结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.eiqnsjz92z.png" alt=""></p>
+<p> 结果如下图所示：<br><img src="https://niithub.cn/pic/image.eiqnsjz92z.png" alt=""></p>
 <h2 id="FLOOR"><a href="#FLOOR" class="headerlink" title="FLOOR()"></a>FLOOR()</h2><p>语法：<code>FLOOR(X)</code><br>作用：返回X的最大整数值，但不能大于X</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT FLOOR(7.55);</span><br></pre></td></tr></tbody></table></figure>
-<p> 结果如下图所示：<br><img src="https://cdn.jsdelivr.net/gh/niithub/pic/blog/image.31ewqlyz2l.png" alt=""></p>
+<p> 结果如下图所示：<br><img src="https://niithub.cn/pic/image.31ewqlyz2l.png" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
